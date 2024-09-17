@@ -18,7 +18,22 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UCameraComponent* CameraComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UStaticMeshComponent* StaticMeshComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class USpotLightComponent* SpotLightComponent;
 
+	UPROPERTY(EditAnywhere, Category = "Transformation")
+	float Speed = 125.0f;
+	UPROPERTY(EditAnywhere, Category = "Transformation")
+	float MoveDistance = 600.0f;
+
+	FVector StartLocation;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
