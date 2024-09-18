@@ -18,6 +18,7 @@ UMover::UMover()
 void UMover::BeginPlay()
 {
 	Super::BeginPlay();
+	startLocation = GetOwner()->GetActorLocation();
 
 	// ...
 	
@@ -31,7 +32,11 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 	AActor* Owner = GetOwner();
 
-	UE_LOG(LogTemp, Display, TEXT("Owner address %u"), Owner);
-	// ...
+	if (shouldMove)
+	{
+		speed = FVector::Dist(startLocation, startLocation + moveOffset) / moveTime;
+		Owner->SetActorLocation(FMath::VInterpConstantTo(Owner->GetActorLocation(), startLocation + moveOffset, DeltaTime, speed));
+	}
+
 }
 

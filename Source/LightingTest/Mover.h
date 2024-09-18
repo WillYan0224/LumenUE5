@@ -20,6 +20,21 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+
+	UPROPERTY(EditAnywhere)
+	float moveTime = 4.0f;
+
+	UPROPERTY(EditAnywhere)
+	bool shouldMove = false;
+
+	FVector startLocation;
+
+	UPROPERTY(EditAnywhere)
+	FVector moveOffset = FVector(0, 0, 0);
+
+	float speed = 1.0f;
+
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
