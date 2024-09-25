@@ -52,7 +52,7 @@ void UGrabber::Grab()
 	DrawDebugLine(GetWorld(), start, end, FColor::Blue);
 
 	FHitResult hitResult;
-	FCollisionShape sphere = FCollisionShape::MakeSphere(25.f);
+	FCollisionShape sphere = FCollisionShape::MakeSphere(GrabRadius);
 
 	DrawDebugSphere(GetWorld(), end, 10, 16, FColor::Blue, false, 5.0f);
 	bool hasHit = GetWorld()->SweepSingleByChannel(hitResult, start, end, FQuat::Identity, ECC_GameTraceChannel1, sphere);
