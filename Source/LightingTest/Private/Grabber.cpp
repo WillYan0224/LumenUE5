@@ -4,13 +4,23 @@
 #include "Grabber.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+
 // Sets default values for this component's properties
 UGrabber::UGrabber()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
+	UPhysicsHandleComponent* physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (physicsHandle != nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Physics Handle Found: %s"), *physicsHandle->GetName());	
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Physics Handle Not Found!"));
+	}
 	// ...
 }
 
@@ -19,7 +29,7 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	// ...
 	
 }
