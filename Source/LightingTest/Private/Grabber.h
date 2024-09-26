@@ -32,7 +32,10 @@ private:
 	float reach = 400.0f;
 
 	UPROPERTY(EditAnywhere)
-	float GrabRadius = 75.0f;
+	float GrabRadius = 100.0f;
+
+	UPROPERTY(EditAnywhere)
+	float holdDistance = 200.0f;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
