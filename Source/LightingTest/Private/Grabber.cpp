@@ -12,15 +12,7 @@ UGrabber::UGrabber()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-	/*UPhysicsHandleComponent* physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if (physicsHandle != nullptr)
-	{
-		UE_LOG(LogTemp, Display, TEXT("Physics Handle Found: %s"), *physicsHandle->GetName());	
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Physics Handle Not Found!"));
-	}*/
+	
 	// ...
 }
 
@@ -39,29 +31,33 @@ void UGrabber::BeginPlay()
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-
+	UPhysicsHandleComponent* physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (physicsHandle == nullptr)
+		return;
+	FVector targetLocation = GetComponentLocation() + GetForwardVector() * holdDistance;
+	physicsHandle->SetTargetLocationAndRotation(targetLocation, GetComponentRotation());
 }
 
 void UGrabber::Grab()
 {
+	UPhysicsHandleComponent* physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (physicsHandle == nullptr)
+		return;
+
 	FVector start = GetComponentLocation();
 	FVector end = start + GetForwardVector() * reach;
-
 
 	DrawDebugLine(GetWorld(), start, end, FColor::Blue);
 
 	FHitResult hitResult;
-	FCollisionShape sphere = FCollisionShape::MakeSphere(25.f);
+	FCollisionShape sphere = FCollisionShape::MakeSphere(GrabRadius);
 
 	DrawDebugSphere(GetWorld(), end, 10, 16, FColor::Blue, false, 5.0f);
 	bool hasHit = GetWorld()->SweepSingleByChannel(hitResult, start, end, FQuat::Identity, ECC_GameTraceChannel1, sphere);
 	if (hasHit)
 	{
-		DrawDebugSphere(GetWorld(), hitResult.Location, 10, 10, FColor::Green, false, 5.0f);
-		DrawDebugSphere(GetWorld(), hitResult.ImpactPoint, 10, 10, FColor::Red, false, 5.0f);
-		AActor* hitActor = hitResult.GetActor();
-		UE_LOG(LogTemp, Display, TEXT("Hit Actor: %s"), *hitActor->GetActorNameOrLabel());
+		physicsHandle->GrabComponentAtLocationWithRotation(hitResult.GetComponent(),
+			NAME_None, hitResult.ImpactPoint, hitResult.GetComponent()->GetComponentRotation());
 	}
 	else
 	{
