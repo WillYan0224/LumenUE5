@@ -39,6 +39,8 @@ private:
 	float holdDistance = 200.0f;
 
 	UPhysicsHandleComponent* GetPhysicsHandle() const;
+
+	bool GetGrabbableInReach(FHitResult& hitResult) const;
 	
 public:	
 	// Called every frame
