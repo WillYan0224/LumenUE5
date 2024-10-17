@@ -33,14 +33,17 @@ void ACameraUtility::Tick(float DeltaTime)
 		if (OurPlayerController->WasInputKeyJustPressed(EKeys::One))
 		{
 			SwitchToCameraOne(timeBetweenCameraChanges, smoothBlendTime);
+			UE_LOG(LogTemp, Warning, TEXT("Switching to Camera 1"))
 		}
 		if (OurPlayerController->WasInputKeyJustPressed(EKeys::Two))
 		{
 			SwitchToCameraTwo();
+			UE_LOG(LogTemp, Warning, TEXT("Switching to Camera 2"))
 		}
 		if (OurPlayerController->WasInputKeyJustPressed(EKeys::Three))
 		{
 			OurPlayerController->SetViewTargetWithBlend(PlayerActor, smoothBlendTime);
+			UE_LOG(LogTemp, Warning, TEXT("Switching to Character Camera"))
 		}
 	}
 }
@@ -72,5 +75,4 @@ void ACameraUtility::SwitchToCameraTwo()
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 
 	PlayerController->SetViewTargetWithBlend(CameraActor2, 0.5f);
-	UE_LOG(LogTemp, Warning, TEXT("Switching to Camera 2"))
 }
