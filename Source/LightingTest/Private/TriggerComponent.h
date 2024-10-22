@@ -6,9 +6,6 @@
 #include "Components/BoxComponent.h"
 #include "TriggerComponent.generated.h"
 
-/**
- * 
- */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UTriggerComponent : public UBoxComponent
 {
